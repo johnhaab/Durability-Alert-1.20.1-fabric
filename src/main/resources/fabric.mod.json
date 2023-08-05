@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "durability-alert-mod",
+	"version": "${version}",
+	"name": "Durability Alert",
+	"description": "This is a mod that will give you Durability Alert's when your stuff gets low!",
+	"authors": [
+		"keziumo"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/durability-alert-mod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "xyz.keziumo.durabilityalert.DurabilityAlertMod"
+		],
+		"client": [
+			"xyz.keziumo.durabilityalert.DurabilityAlertClient"
+		],
+		"fabric-datagen": [
+			"xyz.keziumo.durabilityalert.DurabilityAlertDataGenerator"
+		]
+	},
+	"mixins": [
+		"durability-alert-mod.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.22",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
