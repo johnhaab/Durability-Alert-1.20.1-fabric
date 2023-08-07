@@ -28,6 +28,10 @@ To use Durability Alert, you'll need:
 2. Download and install the latest Fabric Loader from [here](https://fabricmc.net/use/).
 3. Place the Durability Alert mod JAR file along with the Fabric API in the "mods" folder in your Minecraft installation directory.
 
+**CurseForge:**
+
+Download the mod on CurseForge: [Durability Alert on CurseForge](https://legacy.curseforge.com/minecraft/mc-mods/durability-alert)
+
 ## ❤️ Feedback and Contributions
 
 I value your feedback! If you encounter any issues or have suggestions for improvement, please don't hesitate to [open an issue](https://github.com/yourusername/Durability-Alert/issues). Contributions in the form of pull requests are also most welcome!
