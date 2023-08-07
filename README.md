@@ -14,8 +14,10 @@
 ## 🎮 Features
 
 - ⚠️ **Durability Alert:** Whenever any item or tool you are using in the game falls below 20% durability, the mod will now alert you. Never let your favorite tools break unexpectedly again! Stay informed and take action before it's too late.
+<img src="1.png" alt="Showing the feature.">
 
 - 🔍 **Hover-over Durability Percentage:** From now on, when you hover over any item or tool with durability, you can see its current percentage. This information will help you manage your inventory more efficiently and make informed decisions during intense gameplay.
+<img src="2.png" alt="Showing the feature.">
 
 ## 🚀 Installation
 
