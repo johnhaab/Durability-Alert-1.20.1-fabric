@@ -2,61 +2,75 @@ package xyz.keziumo.durabilityalert.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
 public abstract class DurabilityMixin {
+
     @Unique
-    MinecraftClient player = MinecraftClient.getInstance();
+    private MinecraftClient client;
 
-    // Define additional variables to store the custom elytra durability and percentage.
-    private int maxItemHealth;
-    private int currentDurability;
-    private double durabilityPercentage;
+    @Unique
+    private PlayerEntity player;
 
-    private int lastKnownDurability;
+    /**
+     * Injects into the 'damage' method to track durability changes when the item is used.
+     * This method is called when an entity takes durability damage from using the item.
+     *
+     * @param amount       The amount of damage to be applied to the item.
+     * @param entity       The living entity using the item.
+     * @param breakCallback A callback that is triggered when the item breaks.
+     * @param ci           The callback info provided by the mixin system.
+     * @param <T>          The type of living entity using the item.
+     */
+    @Inject(method = "damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V", at = @At("HEAD"))
+    public <T extends LivingEntity> void trackDurability(int amount, T entity, Consumer<T> breakCallback, CallbackInfo ci) {
+        // Get the ItemStack associated with this method call
+        ItemStack stack = (ItemStack)(Object)this;
 
-    // Inject a method to update the durability
-    @Inject(method = "getDamage", at = @At("TAIL"))
-    public void getItemDurability(CallbackInfoReturnable<Integer> cir) {
-
-        // The method is not associated with a player, do not proceed
-        if (this.player == null || this.player.getCameraEntity() == null) {
+        // Check if the item is damageable (has durability)
+        if (!stack.isDamageable()) {
             return;
         }
 
-        // Player is in their inventory, do not show overlay message
-        if (player.currentScreen instanceof InventoryScreen) {
+        // Calculate the current durability percentage
+        double durabilityPercentage = calculateDurabilityPercentage(stack.getMaxDamage(), stack.getDamage());
+
+        client = MinecraftClient.getInstance();
+
+        // Check if the player is in their inventory
+        if (client.currentScreen instanceof InventoryScreen) {
+            // Player is in their inventory, do not show overlay message
             return;
         }
 
-        // Setting various variables
-        maxItemHealth = ((ItemStack)(Object)this).getMaxDamage();
-        currentDurability = cir.getReturnValue();
-        durabilityPercentage = calculateDurabilityPercentage(maxItemHealth, currentDurability);
+        player = client.player;
 
-        String translationKey = ((ItemStack)(Object)this).getTranslationKey();
-        String itemName = convertItemName(translationKey);
+        // Check if the durability percentage is below 20.0%
+        if (durabilityPercentage < 20.0) {
+            // Get the translation key of the item and convert it to a human-readable item name
+            String translationKey = stack.getTranslationKey();
+            String itemName = convertItemName(translationKey);
 
-        System.out.println("max" + maxItemHealth);
-        System.out.println("current" + currentDurability);
-        System.out.println("percent" + durabilityPercentage);
-
-        // If the durability percentage is less than 25%, it's not 0%, and the durability has decreased since the last update
-        // Display an overlay message on the player's screen
-        if (durabilityPercentage < 20.0 && durabilityPercentage != 0.0 && currentDurability > lastKnownDurability) {
+            // Compose the low durability message
             String message = "Your " + itemName + "'s durability is getting low, less than " + durabilityPercentage + "% remaining!";
             String lowDurabilityMessage = Formatting.RED + message;
-            player.inGameHud.setOverlayMessage(Text.of(lowDurabilityMessage), false);
-            // Update the last known durability to the current durability
-            lastKnownDurability = currentDurability;
+
+            // Show the overlay message to the player
+            client.inGameHud.setOverlayMessage(Text.of(lowDurabilityMessage), false);
         }
     }
 

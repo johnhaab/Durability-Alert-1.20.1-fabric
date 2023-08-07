@@ -3,7 +3,7 @@
 	"id": "durability-alert-mod",
 	"version": "${version}",
 	"name": "Durability Alert",
-	"description": "This is a mod that will give you Durability Alert's when your stuff gets low!",
+	"description": "This is a mod that will give you Durability Alert's when your items/objects gets low!",
 	"authors": [
 		"keziumo"
 	],
