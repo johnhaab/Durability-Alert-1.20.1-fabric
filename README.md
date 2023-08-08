@@ -44,4 +44,4 @@ This mod is open-source and distributed under the [MIT License](LICENSE).
 
 ## 🎉 Enjoy the Game!
 
-Thank you for choosing Durability Alert! We hope you have a fantastic time exploring, crafting, and surviving in the world of Minecraft with this mod. Happy gaming! 🎮
+Thank you for choosing Durability Alert! i hope you have a fantastic time exploring, crafting, and surviving in the world of Minecraft with this mod. Happy gaming! 🎮
