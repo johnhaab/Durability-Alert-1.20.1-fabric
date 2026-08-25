@@ -36,7 +36,7 @@ Download the mod on CurseForge: [Durability Alert on CurseForge](https://legacy.
 
 ## ❤️ Feedback and Contributions
 
-I value your feedback! If you encounter any issues or have suggestions for improvement, please don't hesitate to [open an issue](https://github.com/yourusername/Durability-Alert/issues). Contributions in the form of pull requests are also most welcome!
+I value your feedback! If you encounter any issues or have suggestions for improvement, please don't hesitate to [open an issue](https://github.com/johnhaab/Durability-Alert/issues). Contributions in the form of pull requests are also most welcome!
 
 ## 📝 License
 
